@@ -1,19 +1,34 @@
-import {
-  interaction, layer, custom, control,
-  Interactions, Overlayers, Controls,
-  Map, Layers, Overlayer, Util
-} from "react-openlayers";
+
 
 function App() {
+
+  const options = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0
+  };
+
+  function success(pos) {
+
+    console.log(pos);
+    // const crd = pos.coords;
+  
+    // console.log('Your current position is:');
+    // console.log(`Latitude : ${crd.latitude}`);
+    // console.log(`Longitude: ${crd.longitude}`);
+    // console.log(`More or less ${crd.accuracy} meters.`);
+  }
+
+  function error(err) {
+    console.log(err);
+  }
+
+  const myLocation = navigator.geolocation.getCurrentPosition(success, error, options);
+
+
   return (
     <div className="App">
-      <Map view={{center:[0,0], zoom:2}}>
-        <Layers>
-          <layer.Tile>
-            
-          </layer.Tile>
-        </Layers>
-      </Map>
+      Hi
     </div>
   );
 }
