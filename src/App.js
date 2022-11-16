@@ -1,9 +1,33 @@
-import { useState } from 'react';
-import { MapContainer, TileLayer, useMap } from 'react-leaflet'
+import { useEffect, useState, useRef } from 'react';
+import {MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import './App.css';
 import "leaflet/dist/leaflet.css"
+import L from "leaflet";
+
+
+const markerIcon = new L.Icon({
+  iconUrl: require("./resource/marker.png"),
+  iconSize: [40, 40],
+  iconAnchor: [17, 46], //[left/right, top/bottom]
+  popupAnchor: [0, -46], //[left/right, top/bottom]
+});
 
 function App() {
+
+  useEffect(() => {
+
+    const myLocation = navigator.geolocation.watchPosition((position) => {
+      console.log(position.coords)
+      setLatLng({lat: position.coords.latitude, lng: position.coords.longitude});
+      setZoomCenter(13)
+      // setLat(position.coords.latitude);
+      // setLng(position.coords.longitude);
+    }, (err) => {console.log(err)}, options);
+  },[]);
+
+  const [latlng, setLatLng] = useState({lat: 0, lng: 0});
+  const [zoomCenter, setZoomCenter] = useState(4);
+  const mapRef = useRef();
 
   const options = {
     enableHighAccuracy: true,
@@ -11,40 +35,18 @@ function App() {
     maximumAge: 0
   };
 
-  function success(pos) {
-
-    console.log(pos);
-    const crd = pos.coords;
-
-    setCenter({lat: crd.latitude, lng: crd.longitude});
-
-    // console.log('Your current position is:');
-    // console.log(`Latitude : ${crd.latitude}`);
-    // console.log(`Longitude: ${crd.longitude}`);
-    // console.log(`More or less ${crd.accuracy} meters.`);
-  }
-
-  function error(err) {
-    console.log(err);
-  }
-
-  const myLocation = navigator.geolocation.getCurrentPosition(success, error, options);
-
-  const [center, setCenter] = useState({lat: 0, lng: 0});
-
-
   return (
     <div className="App">
-      <MapContainer center={center} zoom={6} scrollWheelZoom={false}>
+      <MapContainer center={latlng} zoom={zoomCenter} scrollWheelZoom={true} >
         <TileLayer
           attribution='&copy; <a href="https://www.maptiler.com/">MapTiler</a> &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://api.maptiler.com/maps/basic-v2/256/{z}/{x}/{y}.png?key=rssMvPnGXHosYe9Ybksw"
         />
-        {/* <Marker position={[51.505, -0.09]}>
+        <Marker position={latlng} icon={markerIcon}>
           <Popup>
             A pretty CSS3 popup. <br /> Easily customizable.
           </Popup>
-        </Marker> */}
+        </Marker>
       </MapContainer>
     </div>
   );
