@@ -15,27 +15,33 @@ const markerIcon = new L.Icon({
 
 // moving location not working!! :(
 function App() {
-
-  useEffect(() => {
-    const myLocation = navigator.geolocation.watchPosition((position) => {
-      console.log(position.coords)
-      setLatLng({lat: position.coords.latitude, lng: position.coords.longitude});
-      setZoomCenter(13)
-      // setLat(position.coords.latitude);
-      // setLng(position.coords.longitude);
-    }, (err) => {console.log(err)}, options);
-  },[]);
-
-  const [latlng, setLatLng] = useState({lat: 0, lng: 0});
-  const [zoomCenter, setZoomCenter] = useState(4);
-  const mapRef = useRef();
-
   const options = {
     enableHighAccuracy: true,
     timeout: 5000,
     maximumAge: 0
   };
 
+
+  // useEffect(() => {
+  //   const myLocation = navigator.geolocation.watchPosition((position) => {
+  //     console.log(position.coords)
+  //     setLatLng({lat: position.coords.latitude, lng: position.coords.longitude});
+  //     setZoomCenter(13)
+  //     // setLat(position.coords.latitude);
+  //     // setLng(position.coords.longitude);
+  //   }, (err) => {console.log(err)}, options);
+  // },[]);
+
+  navigator.geolocation.watchPosition((position) => {
+
+    console.log(position)
+  }, (err) => {console.log()}, options)
+
+  const [latlng, setLatLng] = useState({lat: 0, lng: 0});
+  const [zoomCenter, setZoomCenter] = useState(4);
+  const mapRef = useRef();
+
+  
   return (
     <div className="App">
       <MapContainer center={latlng} zoom={zoomCenter} scrollWheelZoom={true} >
