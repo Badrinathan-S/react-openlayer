@@ -12,10 +12,11 @@ const markerIcon = new L.Icon({
   popupAnchor: [0, -46], //[left/right, top/bottom]
 });
 
+
+// moving location not working!! :(
 function App() {
 
   useEffect(() => {
-
     const myLocation = navigator.geolocation.watchPosition((position) => {
       console.log(position.coords)
       setLatLng({lat: position.coords.latitude, lng: position.coords.longitude});
