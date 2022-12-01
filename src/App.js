@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import {MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import './App.css';
 import "leaflet/dist/leaflet.css"
@@ -13,7 +13,7 @@ const markerIcon = new L.Icon({
 });
 
 
-// moving location not working!! :(
+// Need to test in local 
 function App() {
   const options = {
     enableHighAccuracy: true,
@@ -21,21 +21,14 @@ function App() {
     maximumAge: 0
   };
 
-
-  // useEffect(() => {
-  //   const myLocation = navigator.geolocation.watchPosition((position) => {
-  //     console.log(position.coords)
-  //     setLatLng({lat: position.coords.latitude, lng: position.coords.longitude});
-  //     setZoomCenter(13)
-  //     // setLat(position.coords.latitude);
-  //     // setLng(position.coords.longitude);
-  //   }, (err) => {console.log(err)}, options);
-  // },[]);
-
   navigator.geolocation.watchPosition((position) => {
 
-    console.log(position)
-  }, (err) => {console.log()}, options)
+    console.log(position.coords)
+    let lat = position.coords.latitude; 
+    let lng = position.coords.longitude;
+
+    setLatLng({lat: lat, lng: lng})
+  }, (err) => {console.log(err)}, options)
 
   const [latlng, setLatLng] = useState({lat: 0, lng: 0});
   const [zoomCenter, setZoomCenter] = useState(4);
