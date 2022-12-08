@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaf
 import "leaflet/dist/leaflet.css"
 import L from "leaflet";
 import { Container } from 'react-bootstrap';
+import './TrackLocation.css';
 
 
 const markerIcon = new L.Icon({
@@ -14,7 +15,7 @@ const markerIcon = new L.Icon({
 
 
 // Need to test in local 
-function App() {
+function TrackLocation() {
   const options = {
     enableHighAccuracy: true,
     timeout: 5000,
@@ -66,4 +67,4 @@ function App() {
   );
 }
 
-export default App;
+export default TrackLocation;

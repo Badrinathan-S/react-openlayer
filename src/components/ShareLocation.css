@@ -1,0 +1,16 @@
+.userButtons{
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Buttons{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Button{
+    margin: 10px;
+}
